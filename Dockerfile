@@ -1,5 +1,5 @@
 # Start with php7.1-fpm base alpine image
-FROM php:5-fpm-alpine
+FROM php:7.1-fpm-alpine
 
 LABEL maintainer="faiyaz7283@gmail.com"
 
