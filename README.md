@@ -1,2 +1,2 @@
 # php-fpm
-Dockerfile to build php-fpm
+Dockerfile to build php-fpm.
