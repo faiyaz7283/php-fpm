@@ -4,10 +4,7 @@ FROM php:5.6-fpm-alpine
 LABEL maintainer="faiyaz7283@gmail.com"
 
 # Install the missing pdo_mysql extension
-RUN docker-php-ext-install pdo_mysql
-
-# Install mysqli extension
-RUN apk add --no-cache --update php5-mysqli
+RUN docker-php-ext-install pdo_mysql mysqli
 
 # Install memchached extension
 ENV MEMCACHED_DEPS zlib-dev libmemcached-dev cyrus-sasl-dev
