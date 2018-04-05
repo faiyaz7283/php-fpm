@@ -1,9 +1,9 @@
-# Start with php:5.6-fpm-alpine base alpine image
-FROM php:5.6-fpm-alpine
+# Start with php:7.1-fpm-alpine base alpine image
+FROM php:7.1-fpm-alpine
 
 LABEL maintainer="faiyaz7283@gmail.com"
 
-# Dependencies for php GD
+# Install GD extension
 ENV GD_DEPS freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev
 RUN apk add --no-cache --virtual .gd-deps $GD_DEPS \
     && docker-php-ext-configure gd \
@@ -23,7 +23,7 @@ RUN set -xe \
     && apk add --no-cache libmemcached-libs libmemcached zlib \
     && apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS \
     && apk add --no-cache --virtual .memcached-deps $MEMCACHED_DEPS \
-    && pecl install memcached-2.2.0 \
+    && pecl install memcached \
     && docker-php-ext-enable memcached \
     && rm -rf /usr/share/php7 \
     && rm -rf /tmp/* \
