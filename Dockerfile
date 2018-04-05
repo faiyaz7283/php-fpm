@@ -1,5 +1,5 @@
-# Start with php:5-fpm-alpine base alpine image
-FROM php:5-fpm-alpine
+# Start with php:7.1-fpm-alpine base alpine image
+FROM php:7.1-fpm-alpine
 
 LABEL maintainer="faiyaz7283@gmail.com"
 
@@ -13,7 +13,7 @@ RUN set -xe \
     && apk add --no-cache --update libmemcached \
     && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
     && apk add --no-cache --update --virtual .memcached-deps $MEMCACHED_DEPS \
-    && pecl install memcached-2.2.0 \
+    && pecl install memcached \
     && echo "extension=memcached.so" > /usr/local/etc/php/conf.d/20_memcached.ini \
     && rm -rf /usr/share/php7 \
     && rm -rf /tmp/* \
