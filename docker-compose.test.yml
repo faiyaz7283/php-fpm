@@ -1,3 +1,7 @@
 sut:
-  build: .
+  build: ./5
+  command: echo "Running tests...."
+
+sut:
+  build: ./7
   command: echo "Running tests...."
