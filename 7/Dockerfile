@@ -5,8 +5,7 @@ LABEL maintainer="faiyaz7283@gmail.com"
 
 # Install GD extension
 ENV GD_DEPS freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev
-RUN docker-php-source extract \
-    && apk add --no-cache --virtual .gd-deps $GD_DEPS \
+RUN apk add --no-cache --virtual .gd-deps $GD_DEPS \
     && docker-php-ext-configure gd \
         --with-gd \
         --with-freetype-dir=/usr/include/ \
@@ -15,8 +14,7 @@ RUN docker-php-source extract \
     && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
     && docker-php-ext-install -j${NPROC} gd \
     && rm -rf /tmp/* \
-    && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev \
-    && docker-php-source delete
+    && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
 
 # Install memchached extension
 ENV MEMCACHED_DEPS zlib-dev libmemcached-dev cyrus-sasl-dev
@@ -31,7 +29,7 @@ RUN docker-php-source extract \
     && docker-php-source delete
 
 # Install the pdo_mysql extension, mysqli
-RUN docker-php-ext-install pdo_mysql mysqli
+RUN docker-php-ext-install pdo_mysql mysqli opcache
 
 # Set /var/www as working directory
 WORKDIR /var/www
