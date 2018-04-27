@@ -11,7 +11,8 @@ RUN addgroup -g 1000 -S dcutil && \
     adduser -D -u 1000 -s /bin/bash -G dcutil dcutil
 
 # Install GD extension
-ENV GD_DEPS freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev libvpx-dev
+ENV GD_DEPS freetype libjpeg libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev \
+            libxpm-dev libvpx-dev libjpeg-turbo-utils
 RUN apk add --no-cache --virtual .gd-deps $GD_DEPS \
     && docker-php-ext-configure gd \
         --with-gd \
@@ -22,8 +23,7 @@ RUN apk add --no-cache --virtual .gd-deps $GD_DEPS \
         --with-webp-dir=/usr/include/ \
     && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
     && docker-php-ext-install -j${NPROC} gd \
-    && rm -rf /tmp/* \
-    && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
+    && rm -rf /tmp/*
 
 # Install memchached extension
 ENV MEMCACHED_DEPS zlib-dev libmemcached-dev cyrus-sasl-dev
