@@ -4,7 +4,7 @@ FROM php:5.6-fpm-alpine
 LABEL maintainer="faiyaz7283@gmail.com"
 
 # Install bash and other helpful tools
-RUN apk add --no-cache bash bash-completion sudo git nano curl man
+RUN apk add --no-cache bash bash-completion busybox-suid sudo git nano curl man
 
 # Add a group and user
 RUN addgroup -g 1000 -S dcutil && \
@@ -59,8 +59,10 @@ RUN docker-php-ext-install pdo_mysql mysqli opcache exif
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Add vendor bin to your PATH
-ENV PATH="${PATH}:${HOME}/.composer/vendor/bin:vendor/bin"
+# Add vendor bin to user's PATH
+USER dcutil
+RUN echo "" >> "${HOME}/.bashrc" && \
+    echo 'export PATH="${HOME}/.composer/vendor/bin:vendor/bin:${PATH}"' >> ~/.bashrc
 
 # Set /var/www as working directory
 WORKDIR /var/www
