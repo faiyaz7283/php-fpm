@@ -44,8 +44,8 @@ RUN docker-php-source extract \
     && rm -rf /tmp/* \
     && docker-php-source delete
 
-# Install the pdo_mysql extension, mysqli
-RUN docker-php-ext-install pdo_mysql mysqli opcache exif
+# Install necessary extensions
+RUN docker-php-ext-install pdo_mysql mysqli opcache exif zip
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
